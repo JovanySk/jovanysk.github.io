@@ -42,7 +42,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       try {
         stored = localStorage.getItem("theme");
       } catch {}
-      if (stored) return;
+      if (stored || location.pathname.indexOf("/os") !== 0) return;
       const next: Theme = e.matches ? "dark" : "light";
       root.classList.remove("light", "dark");
       root.classList.add(next);

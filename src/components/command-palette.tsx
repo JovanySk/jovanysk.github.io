@@ -3,17 +3,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
+  AppWindow,
   ArrowDown,
   ArrowUp,
+  Brain,
   Briefcase,
   ChatCircleText,
+  Cpu,
+  Database,
   DownloadSimple,
-  FolderSimple,
   GithubLogo,
   House,
   LinkedinLogo,
   MagnifyingGlass,
-  Moon,
   Stack,
   Translate,
   type Icon,
@@ -21,6 +23,10 @@ import {
 import { LINKS } from "@/i18n";
 import { useSite } from "./providers";
 import { EASE } from "./ui";
+
+export function openPalette() {
+  window.dispatchEvent(new CustomEvent("open-palette"));
+}
 
 type Item = { id: string; group: string; label: string; icon: Icon; run: () => void };
 
@@ -31,7 +37,7 @@ const normalize = (s: string) =>
     .replace(/[̀-ͯ]/g, "");
 
 export function CommandPalette() {
-  const { t, lang, toggleLang, toggleTheme } = useSite();
+  const { t, lang, toggleLang } = useSite();
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -79,12 +85,22 @@ export function CommandPalette() {
   const items: Item[] = useMemo(
     () => [
       { id: "top", group: t.palette.sections, label: t.nav.home.split(",")[0], icon: House, run: go("top") },
-      { id: "projects", group: t.palette.sections, label: t.nav.projects, icon: FolderSimple, run: go("projects") },
-      { id: "experience", group: t.palette.sections, label: t.nav.experience, icon: Briefcase, run: go("experience") },
-      { id: "skills", group: t.palette.sections, label: t.nav.skills, icon: Stack, run: go("skills") },
+      { id: "intesc", group: t.palette.sections, label: `01 · ${t.journey.zones.intesc}`, icon: Briefcase, run: go("intesc") },
+      { id: "ai", group: t.palette.sections, label: `02 · ${t.journey.titles.ai}`, icon: Brain, run: go("ai") },
+      { id: "backend", group: t.palette.sections, label: `03 · ${t.journey.titles.backend}`, icon: Database, run: go("backend") },
+      { id: "systems", group: t.palette.sections, label: `04 · ${t.journey.titles.systems}`, icon: Cpu, run: go("systems") },
+      { id: "stack", group: t.palette.sections, label: `05 · ${t.journey.titles.stack}`, icon: Stack, run: go("stack") },
       { id: "contact", group: t.palette.sections, label: t.nav.contact, icon: ChatCircleText, run: go("contact") },
       { id: "lang", group: t.palette.actions, label: t.palette.switchLang, icon: Translate, run: toggleLang },
-      { id: "theme", group: t.palette.actions, label: t.palette.toggleTheme, icon: Moon, run: toggleTheme },
+      {
+        id: "os",
+        group: t.palette.actions,
+        label: t.os.enter,
+        icon: AppWindow,
+        run: () => {
+          window.location.href = "/os/";
+        },
+      },
       {
         id: "cv",
         group: t.palette.actions,
@@ -110,7 +126,7 @@ export function CommandPalette() {
       { id: "li", group: t.palette.links, label: t.palette.linkedin, icon: LinkedinLogo, run: () => window.open(LINKS.linkedin, "_blank", "noopener") },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, lang, toggleLang, toggleTheme, reduce],
+    [t, lang, toggleLang, reduce],
   );
 
   const filtered = useMemo(() => {

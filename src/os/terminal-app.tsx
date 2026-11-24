@@ -2,11 +2,79 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useSite } from "../components/providers";
+import type { Dict } from "../i18n";
 import { complete, run, type Effect } from "./terminal";
 
 type InEntry = { kind: "in"; text: string };
 type OutEntry = { kind: "out"; lines: string[]; sources?: string[]; sourcesLabel?: string; dim?: boolean };
-type Entry = (InEntry | OutEntry) & { id: number };
+type BannerEntry = { kind: "banner" };
+type Entry = (InEntry | OutEntry | BannerEntry) & { id: number };
+
+// "JM" in the ANSI Shadow figlet font. Rendered in its own monospace stack so the
+// box-drawing glyphs and the spaces always come from the same font (no drift).
+const LOGO = [
+  "     ██╗███╗   ███╗",
+  "     ██║████╗ ████║",
+  "     ██║██╔████╔██║",
+  "██   ██║██║╚██╔╝██║",
+  "╚█████╔╝██║ ╚═╝ ██║",
+  " ╚════╝ ╚═╝     ╚═╝",
+];
+const PALETTE = ["#3f3f46", "#f87171", "#34d399", "#fcd34d", "#60a5fa", "#e879f9", "#67e8f9", "#f4f4f5"];
+
+function Banner({ b }: { b: Dict["os"]["term"]["banner"] }) {
+  const rows: [string, string][] = [
+    ["OS", "JovanyOS 1.0"],
+    b.role as [string, string],
+    b.location as [string, string],
+    b.stack as [string, string],
+    b.focus as [string, string],
+    b.projects as [string, string],
+    b.shell as [string, string],
+  ];
+  const keyW = Math.max(...rows.map(([k]) => k.length)) + 1;
+  return (
+    <div className="mb-1">
+      <div className="flex items-start gap-x-5">
+        <pre
+          aria-hidden="true"
+          className="m-0 mt-1 shrink-0 text-[11px] leading-[1.2] text-emerald-400"
+          style={{ fontFamily: 'Menlo, Consolas, "Cascadia Mono", "DejaVu Sans Mono", monospace' }}
+        >
+          {LOGO.join("\n")}
+        </pre>
+        <div className="min-w-0 flex-1">
+          <div>
+            <span className="font-semibold text-emerald-400">jovany</span>
+            <span className="text-zinc-500">@</span>
+            <span className="font-semibold text-emerald-400">jovanyos</span>
+          </div>
+          <div className="whitespace-pre text-zinc-600">{"-".repeat("jovany@jovanyos".length)}</div>
+          {/* key column sized in ch so values stay aligned; long values wrap under themselves */}
+          <dl className="grid gap-x-2" style={{ gridTemplateColumns: `${keyW + 1}ch 1fr` }}>
+            {rows.map(([k, v]) => (
+              <div key={k} className="contents">
+                <dt className="font-semibold text-emerald-400">{k}:</dt>
+                <dd className="m-0 text-zinc-200">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="mt-2 flex gap-0" aria-hidden="true">
+            {PALETTE.map((c) => (
+              <span key={c} className="inline-block h-[13px] w-[22px]" style={{ background: c }} />
+            ))}
+          </div>
+        </div>
+      </div>
+      <p className="mt-4 text-zinc-400">
+        {b.hint[0]}
+        <span className="text-emerald-400">{b.hint[1]}</span>
+        {b.hint[2]}
+        <span className="text-zinc-100">{b.hint[3]}</span>
+      </p>
+    </div>
+  );
+}
 
 /** Reveals lines character by character (sequentially). Instant under reduced motion. */
 function Typed({ lines, reduce, onTick }: { lines: string[]; reduce: boolean; onTick: () => void }) {
@@ -51,7 +119,7 @@ export function TerminalApp({
   const { t, lang } = useSite();
   const T = t.os.term;
   const nextId = useRef(1);
-  const [entries, setEntries] = useState<Entry[]>(() => [{ id: 0, kind: "out", lines: T.boot, dim: true }]);
+  const [entries, setEntries] = useState<Entry[]>(() => [{ id: 0, kind: "banner" }]);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [hIndex, setHIndex] = useState<number | null>(null);
@@ -119,7 +187,9 @@ export function TerminalApp({
     >
       <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto px-5 py-4" aria-live="polite">
         {entries.map((e, idx) =>
-          e.kind === "in" ? (
+          e.kind === "banner" ? (
+            <Banner key={e.id} b={T.banner} />
+          ) : e.kind === "in" ? (
             <div key={e.id} className="mt-3 first:mt-0">
               <span className="text-emerald-400">jovany@os</span>
               <span className="text-zinc-400">:~$ </span>

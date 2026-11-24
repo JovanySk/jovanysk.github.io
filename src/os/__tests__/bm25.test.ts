@@ -38,6 +38,17 @@ describe("BM25 retrieval", () => {
     }
   });
 
+  it("answers full stack questions: frontend, cloud/gcp, mobile, testing", () => {
+    const top = (q: string) => new BM25(KB).search(q, 1)[0].passage.id;
+    expect(top("what frontend do you use")).toBe("skills-frontend");
+    expect(top("gcp")).toBe("skills-gcp");
+    expect(top("experiencia en la nube aws kubernetes")).toBe("skills-cloud");
+    expect(top("mobile android")).toBe("skills-mobile");
+    expect(top("fullstack")).toBe("skills-fullstack");
+    const a = answer("testing tools", "en");
+    expect(a.found && a.text.join(" ")).toMatch(/Testcontainers/);
+  });
+
   it("falls back below the threshold", () => {
     expect(answer("receta de pizza napolitana", "es").found).toBe(false);
     expect(answer("favorite football team", "en").found).toBe(false);

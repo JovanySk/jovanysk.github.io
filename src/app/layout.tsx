@@ -7,9 +7,9 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 const SITE = "https://jovanysk.github.io";
-const TITLE = "Jovany Morales del Ángel | Software Developer, RAG & Backend";
+const TITLE = "Jovany Morales del Ángel | Software Engineer, Full Stack, Applied AI (RAG)";
 const DESCRIPTION =
-  "Junior software developer focused on applied AI (RAG), backend, Python and AWS. Desarrollador de software junior: IA aplicada (RAG), backend, Python y AWS.";
+  "Software Engineer · Full Stack · Applied AI (RAG) · Cloud. Desarrollador de Software Full Stack · IA aplicada (RAG) · Cloud.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     locale: "es_MX",
     alternateLocale: ["en_US"],
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Jovany Morales del Ángel, software developer" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Jovany Morales del Ángel, software engineer" }],
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og.png"] },
 };
@@ -38,7 +38,8 @@ export const viewport: Viewport = {
 };
 
 // Runs before paint: picks theme (stored > system) and language (stored > navigator.language).
-const bootScript = `(function(){try{var d=document.documentElement;var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.classList.add(t);var l=localStorage.getItem('lang');if(l!=='es'&&l!=='en'){l=(navigator.language||'').toLowerCase().indexOf('es')===0?'es':'en'}d.lang=l;}catch(e){}})();`;
+// The classic journey page is always dark; only /os honours the stored theme. Adds "js" for the loader.
+const bootScript = `(function(){try{var d=document.documentElement;d.classList.add('js');var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}if(location.pathname.indexOf('/os')!==0){t='dark'}d.classList.add(t);var l=localStorage.getItem('lang');if(l!=='es'&&l!=='en'){l=(navigator.language||'').toLowerCase().indexOf('es')===0?'es':'en'}d.lang=l;}catch(e){}})();`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
