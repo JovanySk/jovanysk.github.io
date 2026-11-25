@@ -121,16 +121,16 @@ const es = {
       {
         repo: "smartticket",
         kind: "metric",
-        desc: "API de ML que clasifica tickets de soporte, entrenada con 11,922 tickets.",
+        desc: "Mesa de ayuda con IA: clasifica tickets por tipo, área y prioridad y manda a revisión humana los dudosos.",
         facts: [
           "Macro-F1 de tipo: 0.85 contra 0.14 del baseline",
           "Con revisión humana por confianza, enruta solo el 21% de los tickets con 85% de precisión",
-          "Demo web y 15 pruebas pytest",
+          "Login por roles, bandeja de revisión, 6 idiomas y 49 pruebas pytest",
         ],
         stack: ["FastAPI", "scikit-learn", "Docker"],
         metric: { value: "0.85", caption: "macro-F1, contra 0.14 del baseline" },
-        image: { src: "/shots/smartticket-auto.webp", w: 1200, h: 750, alt: "Captura de la demo web de smartticket: un ticket de cobro doble enrutado automáticamente a Billing and Payments con 97% de confianza." },
-        extra: { src: "/shots/smartticket-review.webp", w: 1200, h: 750, alt: "Captura de smartticket con un ticket de VPN retenido para revisión humana porque la confianza queda bajo el umbral." },
+        image: { src: "/shots/smartticket-auto.webp", w: 1200, h: 750, alt: "Captura de la portada de SmartTicket: mesa de ayuda con el formulario de ticket al centro y agentes de soporte conectados." },
+        extra: { src: "/shots/smartticket-review.webp", w: 1200, h: 750, alt: "Captura de la bandeja de revisión de SmartTicket: tickets con baja confianza y las áreas que propone la IA." },
       },
       {
         repo: "plant-doctor-ai",
@@ -515,16 +515,16 @@ const en: Dict = {
       {
         repo: "smartticket",
         kind: "metric",
-        desc: "Ticket-triage ML API, trained on 11,922 support tickets.",
+        desc: "AI help desk: triages tickets by type, department and priority, and sends uncertain ones to human review.",
         facts: [
           "Type macro-F1: 0.85 vs a 0.14 baseline",
           "Confidence-based human review auto-routes 21% of tickets at 85% accuracy",
-          "Web demo and 15 pytest tests",
+          "Role-based login, review inbox, 6 languages and 49 pytest tests",
         ],
         stack: ["FastAPI", "scikit-learn", "Docker"],
         metric: { value: "0.85", caption: "macro-F1, vs a 0.14 baseline" },
-        image: { src: "/shots/smartticket-auto.webp", w: 1200, h: 750, alt: "Screenshot of the smartticket web demo: a double-charge ticket auto-routed to Billing and Payments at 97% confidence." },
-        extra: { src: "/shots/smartticket-review.webp", w: 1200, h: 750, alt: "Screenshot of smartticket holding a VPN ticket for human review because confidence is below the threshold." },
+        image: { src: "/shots/smartticket-auto.webp", w: 1200, h: 750, alt: "Screenshot of the SmartTicket landing page: help desk with the ticket form in the center and connected support agents." },
+        extra: { src: "/shots/smartticket-review.webp", w: 1200, h: 750, alt: "Screenshot of the SmartTicket review inbox: low-confidence tickets and the departments the AI suggests." },
       },
       {
         repo: "plant-doctor-ai",
