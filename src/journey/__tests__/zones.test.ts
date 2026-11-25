@@ -119,7 +119,7 @@ describe("project visuals", () => {
         expect(p.image?.src, p.repo).toMatch(/^\/shots\/.+\.webp$/);
         expect(p.image?.alt.length, p.repo).toBeGreaterThan(20);
       });
-      expect(dict[lang].more.media).toHaveLength(9);
+      expect(dict[lang].more.media).toHaveLength(11);
     }
   });
 

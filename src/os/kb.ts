@@ -191,6 +191,6 @@ export const KB: Passage[] = [
     es: "La suite de regresión nativa de minijava-compiler compila, ensambla, ejecuta y compara la salida de cada programa: 7/7 en verde.",
     en: "The minijava-compiler native regression suite compiles, assembles, runs and diffs every program: 7/7 passing." },
   { id: "kurocute", source: repo("kurocute"), tags: "kurocute laravel tienda store facturacion invoicing proyecto project",
-    es: "kurocute: tienda y facturación en Laravel, con catálogo público y panel de administración.",
-    en: "kurocute: a Laravel store and invoicing app, with a public catalog and a back office." },
+    es: "kurocute: tienda y facturación en Laravel 13 con carrito, back office con dashboard y gráficas, facturas PDF, correos HTML, modo oscuro y 76 pruebas PHPUnit.",
+    en: "kurocute: a Laravel 13 store and invoicing app with a cart, a back office dashboard with charts, PDF invoices, HTML emails, dark mode and 76 PHPUnit tests." },
 ];

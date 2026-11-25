@@ -30,6 +30,7 @@ function useProjects() {
     "spring-cloud-microservices": [M[4], M[5]],
     "minijava-compiler": [M[6], M[7]],
     inventrack: [M[8]],
+    kurocute: [M[9], M[10]],
   };
   t.more.items.forEach((p) =>
     map.set(p.repo, { repo: p.repo, desc: p.desc, facts: [], stack: [], image: media[p.repo]?.[0], extra: media[p.repo]?.[1] }),

@@ -56,6 +56,7 @@ const MORE_MEDIA: Record<string, number[]> = {
   "spring-cloud-microservices": [4, 5],
   "minijava-compiler": [6, 7],
   inventrack: [8],
+  kurocute: [9, 10],
 };
 
 export function buildProjects(t: Dict): OsProject[] {

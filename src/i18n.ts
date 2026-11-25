@@ -220,6 +220,8 @@ const es = {
       { src: "/shots/minijava-run.webp", w: 1200, h: 751, alt: "Captura del IDE de minijava-compiler ejecutando Recursion.mjava compilado a nativo, con la salida del programa." },
       { src: "/shots/minijava-editor.webp", w: 1200, h: 751, alt: "Captura del editor oscuro de minijava-compiler con Showcase.mjava y la tabla de símbolos." },
       { src: "/shots/inventrack-dashboard.webp", w: 1200, h: 868, alt: "Captura del dashboard rediseñado de inventrack con valor del inventario, entradas y salidas, y stock bajo." },
+      { src: "/shots/kurocute-store.webp", w: 1200, h: 750, alt: "Captura de la portada de la tienda kurocute en modo oscuro, con buscador y productos destacados." },
+      { src: "/shots/kurocute-dashboard.webp", w: 1200, h: 750, alt: "Captura del back office de kurocute con cobrado del mes, ingresos por mes y facturas por estado." },
     ] as MediaShot[],
     items: [
       { repo: "stockpilot", desc: "Inventario con ASP.NET Core 9 y React/TS, 16 pruebas xUnit." },
@@ -229,7 +231,7 @@ const es = {
       { repo: "inventrack", desc: "Astro y PostgreSQL con dashboard rediseñado, alertas de stock por correo, desplegado en Railway." },
       { repo: "qaflow-testing-portfolio", desc: "Pruebas de QA: Postman 30/30, Cypress 4/4 y SQL 10/10." },
       { repo: "minijava-compiler", desc: "Compilador de un lenguaje tipo Java hecho desde cero, con IDE propio y backend nativo x86-64 que soporta recursión." },
-      { repo: "kurocute", desc: "Tienda y facturación en Laravel, con catálogo público y panel de administración." },
+      { repo: "kurocute", desc: "Tienda y facturación en Laravel 13 con carrito, dashboard, facturas PDF y 76 pruebas." },
     ] as MiniProject[],
   },
   skills: {
@@ -612,6 +614,8 @@ const en: Dict = {
       { src: "/shots/minijava-run.webp", w: 1200, h: 751, alt: "Screenshot of the minijava-compiler IDE running Recursion.mjava compiled to native code, with the program output." },
       { src: "/shots/minijava-editor.webp", w: 1200, h: 751, alt: "Screenshot of the minijava-compiler dark editor with Showcase.mjava and the symbol table." },
       { src: "/shots/inventrack-dashboard.webp", w: 1200, h: 868, alt: "Screenshot of the redesigned inventrack dashboard with inventory value, stock in and out, and low stock." },
+      { src: "/shots/kurocute-store.webp", w: 1200, h: 750, alt: "Screenshot of the kurocute storefront in dark mode, with search and featured products." },
+      { src: "/shots/kurocute-dashboard.webp", w: 1200, h: 750, alt: "Screenshot of the kurocute back office with monthly revenue, revenue by month and invoices by status." },
     ],
     items: [
       { repo: "stockpilot", desc: "Inventory app on ASP.NET Core 9 and React/TS, 16 xUnit tests." },
@@ -621,7 +625,7 @@ const en: Dict = {
       { repo: "inventrack", desc: "Astro and PostgreSQL with a redesigned dashboard and email stock alerts, deployed on Railway." },
       { repo: "qaflow-testing-portfolio", desc: "QA testing: Postman 30/30, Cypress 4/4 and SQL 10/10." },
       { repo: "minijava-compiler", desc: "Compiler for a small Java-like language, written from scratch, with its own IDE and a native x86-64 back end that handles recursion." },
-      { repo: "kurocute", desc: "Laravel store and invoicing app, with a public catalog and a back office." },
+      { repo: "kurocute", desc: "Laravel 13 store and invoicing app with cart, dashboard, PDF invoices and 76 tests." },
     ],
   },
   skills: {
