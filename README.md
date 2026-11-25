@@ -34,4 +34,4 @@ Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and
 
 ## License
 
-MIT
+© 2026 Jovany Morales del Ángel. All rights reserved.
