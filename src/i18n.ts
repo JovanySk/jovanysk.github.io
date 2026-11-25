@@ -220,7 +220,7 @@ const es = {
       { src: "/shots/minijava-run.webp", w: 1200, h: 751, alt: "Captura del IDE de minijava-compiler ejecutando Recursion.mjava compilado a nativo, con la salida del programa." },
       { src: "/shots/minijava-editor.webp", w: 1200, h: 751, alt: "Captura del editor oscuro de minijava-compiler con Showcase.mjava y la tabla de símbolos." },
       { src: "/shots/inventrack-dashboard.webp", w: 1200, h: 868, alt: "Captura del dashboard rediseñado de inventrack con valor del inventario, entradas y salidas, y stock bajo." },
-      { src: "/shots/kurocute-store.webp", w: 1200, h: 750, alt: "Captura de la portada de la tienda kurocute en modo oscuro, con buscador y productos destacados." },
+      { src: "/shots/kurocute-store.webp", w: 1200, h: 750, alt: "Captura de la portada de kurocute, tiendita de fans de Kuromi, con collage de ilustraciones y buscador." },
       { src: "/shots/kurocute-dashboard.webp", w: 1200, h: 750, alt: "Captura del back office de kurocute con cobrado del mes, ingresos por mes y facturas por estado." },
     ] as MediaShot[],
     items: [
@@ -614,7 +614,7 @@ const en: Dict = {
       { src: "/shots/minijava-run.webp", w: 1200, h: 751, alt: "Screenshot of the minijava-compiler IDE running Recursion.mjava compiled to native code, with the program output." },
       { src: "/shots/minijava-editor.webp", w: 1200, h: 751, alt: "Screenshot of the minijava-compiler dark editor with Showcase.mjava and the symbol table." },
       { src: "/shots/inventrack-dashboard.webp", w: 1200, h: 868, alt: "Screenshot of the redesigned inventrack dashboard with inventory value, stock in and out, and low stock." },
-      { src: "/shots/kurocute-store.webp", w: 1200, h: 750, alt: "Screenshot of the kurocute storefront in dark mode, with search and featured products." },
+      { src: "/shots/kurocute-store.webp", w: 1200, h: 750, alt: "Screenshot of the kurocute storefront, a Kuromi fan shop, with an illustration collage and search." },
       { src: "/shots/kurocute-dashboard.webp", w: 1200, h: 750, alt: "Screenshot of the kurocute back office with monthly revenue, revenue by month and invoices by status." },
     ],
     items: [
