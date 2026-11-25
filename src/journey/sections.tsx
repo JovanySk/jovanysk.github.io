@@ -10,23 +10,30 @@ import { useSite } from "@/components/providers";
 import { Magnetic, ProjectCard, Rise, SplitTitle } from "./fx";
 import { CLUSTER_IDS, type ClusterId } from "./zones";
 
-// Real tool names registered in ordercontext-mcp/mcp-server/src/tools.ts
-const MCP_TOOLS = ["get_order_by_id", "list_pending_orders", "get_customer_summary", "get_low_stock_products", "generate_order_context"];
 
 const chip = "inline-flex items-center rounded-md bg-white/[0.04] px-2 py-1 font-mono text-[11px] leading-none text-zinc-400 ring-1 ring-inset ring-white/10";
 
-type Proj = { repo: string; desc: string; facts: string[]; stack: string[]; image?: MediaShot; phone?: MediaShot };
+type Proj = { repo: string; desc: string; facts: string[]; stack: string[]; image?: MediaShot; extra?: MediaShot };
 
 function useProjects() {
   const { t } = useSite();
   const map = new Map<string, Proj>();
-  t.projects.items.forEach((p: FeaturedProject) => map.set(p.repo, { repo: p.repo, desc: p.desc, facts: p.facts, stack: p.stack, image: p.image }));
-  const media: Record<string, MediaShot | undefined> = {
-    stockpilot: t.more.media[0],
-    "mi-mascota-citas": t.more.media[1],
-    "datavault-android": t.more.media[2],
+  t.projects.items.forEach((p: FeaturedProject) =>
+    map.set(p.repo, { repo: p.repo, desc: p.desc, facts: p.facts, stack: p.stack, image: p.image, extra: p.extra }),
+  );
+  // indices into t.more.media: [main, extra]
+  const M = t.more.media;
+  const media: Record<string, [MediaShot, MediaShot?]> = {
+    stockpilot: [M[0]],
+    "mi-mascota-citas": [M[1]],
+    "datavault-android": [M[2], M[3]],
+    "spring-cloud-microservices": [M[4], M[5]],
+    "minijava-compiler": [M[6], M[7]],
+    inventrack: [M[8]],
   };
-  t.more.items.forEach((p) => map.set(p.repo, { repo: p.repo, desc: p.desc, facts: [], stack: [], image: media[p.repo] }));
+  t.more.items.forEach((p) =>
+    map.set(p.repo, { repo: p.repo, desc: p.desc, facts: [], stack: [], image: media[p.repo]?.[0], extra: media[p.repo]?.[1] }),
+  );
   return (repo: string) => map.get(repo)!;
 }
 
@@ -123,7 +130,7 @@ function CardHead({ repo, k }: { repo: string; k?: { v: string; c: string } }) {
   );
 }
 
-function Shot({ img, ratio = "aspect-[16/10]" }: { img: MediaShot; ratio?: string }) {
+function Shot({ img, pip, ratio = "aspect-[16/10]" }: { img: MediaShot; pip?: MediaShot; ratio?: string }) {
   return (
     <div className={`relative ${ratio} overflow-hidden border-b border-white/10 bg-zinc-900`}>
       <Image
@@ -134,6 +141,12 @@ function Shot({ img, ratio = "aspect-[16/10]" }: { img: MediaShot; ratio?: strin
         sizes="(min-width: 1024px) 560px, 100vw"
         className="h-full w-full object-cover object-top opacity-90 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-hover:opacity-100"
       />
+      {/* second real screenshot as picture-in-picture */}
+      {pip && !pip.phone && (
+        <span className="absolute bottom-3 right-3 block w-[36%] overflow-hidden rounded-lg shadow-[0_12px_40px_-8px_rgb(0_0_0/0.9)] ring-1 ring-white/20 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-1">
+          <Image src={pip.src} alt={pip.alt} width={pip.w} height={pip.h} sizes="220px" className="block aspect-[16/10] w-full object-cover object-top" />
+        </span>
+      )}
     </div>
   );
 }
@@ -143,7 +156,7 @@ function Card({ p, cluster, slot, extra, showImage = true }: { p: Proj; cluster:
   const k = t.journey.keys[p.repo];
   return (
     <ProjectCard href={LINKS.repo(p.repo)} label={t.projects.repoAria(p.repo)} cluster={cluster} slot={slot}>
-      {showImage && p.image && <Shot img={p.image} />}
+      {showImage && p.image && <Shot img={p.image} pip={p.extra} />}
       <div className="p-5 md:p-6">
         <CardHead repo={p.repo} k={k} />
         {extra}
@@ -295,23 +308,6 @@ function TicketBars() {
   );
 }
 
-function McpTools() {
-  const { t } = useSite();
-  return (
-    <figure className="mt-4 rounded-lg bg-black/40 p-3 ring-1 ring-inset ring-white/10">
-      <ul className="space-y-1 font-mono text-[12px] leading-relaxed">
-        {MCP_TOOLS.map((tool) => (
-          <li key={tool} className="flex items-center justify-between gap-3">
-            <span className="truncate text-zinc-200">{tool}()</span>
-            <span className="shrink-0 text-emerald-400/80">readOnly</span>
-          </li>
-        ))}
-      </ul>
-      <figcaption className="mt-2 text-[11px] text-zinc-500">{t.projects.codeCaption}</figcaption>
-    </figure>
-  );
-}
-
 export function ZoneAi() {
   const { t } = useSite();
   const J = t.journey;
@@ -335,7 +331,7 @@ export function ZoneAi() {
         <div className="flex flex-col gap-5 lg:mt-40 lg:w-[38%]">
           <Drift d={0.5}>
             <Rise>
-              <Card p={p("ordercontext-mcp")} cluster="ai" slot={2} extra={<McpTools />} />
+              <Card p={p("ordercontext-mcp")} cluster="ai" slot={2} />
             </Rise>
           </Drift>
           <Drift d={0.85} className="lg:-ml-[10%]">
@@ -404,8 +400,10 @@ export function ZoneSystems() {
   const { t } = useSite();
   const J = t.journey;
   const p = useProjects();
-  const zyra = p("zyra-compiler").image!;
+  const mirror = p("browsing-history-mirror").image!;
+  const minijava = p("minijava-compiler").image!;
   const vault = t.more.media[3];
+  const floats = [mirror, minijava, vault];
   return (
     <Zone id="systems">
       <div className="relative lg:flex lg:items-start lg:justify-between">
@@ -427,14 +425,15 @@ export function ZoneSystems() {
                         window.dispatchEvent(new CustomEvent("latent:query", { detail: { cluster: "systems", slot: i, x: r.left + r.width / 2, y: r.top + r.height / 2 } }));
                       }}
                       onPointerLeave={() => window.dispatchEvent(new CustomEvent("latent:query", { detail: null }))}
-                      className="group grid grid-cols-[2rem_1fr_auto] items-baseline gap-x-3 px-4 py-4 transition-colors duration-200 hover:bg-emerald-400/[0.05] md:grid-cols-[2.5rem_1fr_9rem_1.5rem] md:px-5"
+                      className="group grid grid-cols-[2rem_1fr_auto] items-center gap-x-3 px-4 py-4 transition-colors duration-200 hover:bg-emerald-400/[0.05] sm:grid-cols-[2rem_5.5rem_1fr_auto] md:grid-cols-[2.5rem_6rem_1fr_8.5rem_1.5rem] md:px-5"
                     >
                       <span className="font-mono text-[11px] text-zinc-600 group-hover:text-emerald-400">{String(i + 1).padStart(2, "0")}</span>
+                      <Thumb img={p(repo).image} repo={repo} />
                       <span className="min-w-0">
                         <span className="block font-mono text-[14px] text-zinc-100">{repo}</span>
                         <span className="mt-1 block text-pretty text-[13.5px] leading-snug text-zinc-400">{p(repo).desc}</span>
                       </span>
-                      <span className="text-right">
+                      <span className="max-w-[7.5rem] text-right sm:max-w-none">
                         <span className="block font-mono text-[15px] text-emerald-400">{k.v}</span>
                         <span className="block font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-500">{k.c}</span>
                       </span>
@@ -446,22 +445,49 @@ export function ZoneSystems() {
             </ol>
           </Rise>
         </div>
-        <div className="pointer-events-none relative mt-10 hidden h-[560px] lg:mt-48 lg:block lg:w-[34%]">
-          <Drift d={1} className="absolute right-0 top-0 w-[88%]">
+        <div className="pointer-events-none relative mt-10 hidden h-[760px] lg:mt-40 lg:block lg:w-[36%]">
+          <Drift d={1} className="absolute right-0 top-0 w-[92%]">
             <figure className="glass-card overflow-hidden rounded-[14px]">
-              <Image src={zyra.src} alt={zyra.alt} width={zyra.w} height={zyra.h} sizes="420px" className="w-full opacity-85" />
-              <figcaption className="px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">zyra-compiler · NASM x86-64</figcaption>
+              <Image src={mirror.src} alt={mirror.alt} width={mirror.w} height={mirror.h} sizes="460px" className="w-full opacity-90" />
+              <figcaption className="px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">browsing-history-mirror · demo</figcaption>
             </figure>
           </Drift>
-          <Drift d={1.4} className="absolute bottom-0 left-[4%] w-[38%]">
+          <Drift d={1.35} className="absolute left-0 top-[50%] w-[68%]">
+            <figure className="glass-card overflow-hidden rounded-[14px]">
+              <Image src={minijava.src} alt={minijava.alt} width={minijava.w} height={minijava.h} sizes="340px" className="w-full opacity-90" />
+              <figcaption className="px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">minijava-compiler · 7/7 native</figcaption>
+            </figure>
+          </Drift>
+          <Drift d={1.7} className="absolute bottom-0 right-[2%] w-[27%]">
             <figure className="glass-card overflow-hidden rounded-[18px]">
-              <Image src={vault.src} alt={vault.alt} width={vault.w} height={vault.h} sizes="180px" className="w-full opacity-90" />
-              <figcaption className="px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">datavault-android</figcaption>
+              <Image src={vault.src} alt={vault.alt} width={vault.w} height={vault.h} sizes="140px" className="w-full opacity-90" />
             </figure>
           </Drift>
         </div>
       </div>
+      {/* small screens: the same real screenshots as a strip */}
+      <ul className="mt-4 grid grid-cols-3 gap-2 lg:hidden">
+        {floats.map((img) => (
+          <li key={img.src} className="glass-card overflow-hidden rounded-lg">
+            <Image src={img.src} alt={img.alt} width={img.w} height={img.h} sizes="33vw" className="aspect-[4/3] w-full object-cover object-top" />
+          </li>
+        ))}
+      </ul>
     </Zone>
+  );
+}
+
+function Thumb({ img, repo }: { img?: MediaShot; repo: string }) {
+  if (!img)
+    return (
+      <span aria-hidden="true" className="hidden aspect-[16/10] w-full place-items-center rounded-md bg-white/[0.03] font-mono text-[11px] uppercase text-zinc-600 ring-1 ring-inset ring-white/[0.08] sm:grid">
+        {repo.slice(0, 2)}
+      </span>
+    );
+  return (
+    <span className="hidden overflow-hidden rounded-md ring-1 ring-white/10 sm:block">
+      <Image src={img.src} alt="" width={img.w} height={img.h} sizes="96px" className={`aspect-[16/10] w-full object-cover ${img.phone ? "object-[50%_20%]" : "object-top"} opacity-85 transition-opacity group-hover:opacity-100`} />
+    </span>
   );
 }
 

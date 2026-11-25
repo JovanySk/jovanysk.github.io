@@ -36,15 +36,12 @@ import { buildHolds, CLUSTER_IDS, clamp01, morphAt, scrollToPath, stations, ZONE
 
 type Props = { reduced: boolean; lite: boolean; label: string };
 
+// screenshots of the first project zone, preloaded through the manager (the HTML reuses the cache)
 export const SHOTS = [
   "/shots/plant-doctor.webp",
+  "/shots/smartticket-auto.webp",
+  "/shots/ordercontext-console.webp",
   "/shots/n8n-workflow.webp",
-  "/shots/bi-sales.webp",
-  "/shots/stockpilot.webp",
-  "/shots/mascota-form.webp",
-  "/shots/zyra-console.webp",
-  "/shots/datavault-dashboard.webp",
-  "/shots/datavault-ai.webp",
 ];
 
 export type QueryDetail = { cluster: ClusterId; slot: number; x: number; y: number } | null;

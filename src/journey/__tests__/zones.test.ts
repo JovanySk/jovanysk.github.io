@@ -14,6 +14,7 @@ import {
 } from "../zones";
 import { buildCloud, nearest, samplePixels } from "../particles";
 import { dict } from "../../i18n";
+import { buildProjects } from "../../os/projects-data";
 
 // 7 sections: intro 900, then zones of various heights, viewport 900
 const VH = 900;
@@ -108,6 +109,28 @@ describe("zone helpers", () => {
       expect(dict.es.journey.keys[r]).toBeDefined();
       expect(dict.en.journey.keys[r]).toBeDefined();
     });
+  });
+});
+
+describe("project visuals", () => {
+  it("gives every featured project a real screenshot, in both languages", () => {
+    for (const lang of ["es", "en"] as const) {
+      dict[lang].projects.items.forEach((p) => {
+        expect(p.image?.src, p.repo).toMatch(/^\/shots\/.+\.webp$/);
+        expect(p.image?.alt.length, p.repo).toBeGreaterThan(20);
+      });
+      expect(dict[lang].more.media).toHaveLength(9);
+    }
+  });
+
+  it("shows every screenshot in the JovanyOS project windows", () => {
+    const os = buildProjects(dict.en);
+    os.filter((p) => p.featured).forEach((p) => expect(p.images.length, p.repo).toBeGreaterThan(0));
+    const by = (r: string) => os.find((p) => p.repo === r)!;
+    expect(by("smartticket").images).toHaveLength(2);
+    expect(by("spring-cloud-microservices").images.map((i) => i.src)).toContain("/shots/springcloud-eureka.webp");
+    expect(by("minijava-compiler").images).toHaveLength(2);
+    expect(by("inventrack").images[0].src).toBe("/shots/inventrack-dashboard.webp");
   });
 });
 
