@@ -212,7 +212,7 @@ const es = {
     title: "Más proyectos",
     media: [
       { src: "/shots/stockpilot.webp", w: 1200, h: 750, alt: "Dashboard de stockpilot con inventario y alertas." },
-      { src: "/shots/mascota-form.webp", w: 1200, h: 771, alt: "Formulario para agendar una cita en mi-mascota-citas." },
+      { src: "/shots/mascota-inicio.webp", w: 1200, h: 750, alt: "Inicio de mi-mascota-citas: golden que da la pata y gato asomado sobre el título." },
       { src: "/shots/datavault-dashboard.webp", w: 520, h: 1036, alt: "Pantalla principal de datavault-android.", phone: true },
       { src: "/shots/datavault-ai.webp", w: 520, h: 1036, alt: "Asistente de IA de datavault-android.", phone: true },
       { src: "/shots/springcloud-order.webp", w: 1200, h: 750, alt: "Captura de la consola de operaciones de spring-cloud-microservices: arquitectura con gateway, servicios y un pedido creado." },
@@ -226,7 +226,7 @@ const es = {
     items: [
       { repo: "stockpilot", desc: "Inventario con ASP.NET Core 9 y React/TS, 16 pruebas xUnit." },
       { repo: "spring-cloud-microservices", desc: "Gateway, Eureka, Config Server y 3 servicios, con consola de operaciones y 49 pruebas." },
-      { repo: "mi-mascota-citas", desc: "Citas veterinarias en ASP.NET Core MVC, disponibilidad con AJAX, 48 pruebas." },
+      { repo: "mi-mascota-citas", desc: "Citas veterinarias en ASP.NET Core MVC: landing animada, agenda real con AJAX y 62 pruebas." },
       { repo: "datavault-android", desc: "Bóveda AES-256 en Kotlin y Jetpack Compose, con asistente de IA." },
       { repo: "inventrack", desc: "Astro y PostgreSQL con estilo de ferretería: 52 productos con foto, carrusel animado y alertas por correo." },
       { repo: "qaflow-testing-portfolio", desc: "Pruebas de QA: Postman 30/30, Cypress 4/4 y SQL 10/10." },
@@ -328,7 +328,7 @@ const es = {
       "spring-cloud-microservices": { v: "49", c: "pruebas" },
       "bi-tienda": { v: "9,393", c: "filas al esquema estrella" },
       stockpilot: { v: "16", c: "pruebas xUnit" },
-      "mi-mascota-citas": { v: "48", c: "pruebas" },
+      "mi-mascota-citas": { v: "62", c: "pruebas" },
       "zyra-compiler": { v: "x86-64", c: "salida nativa NASM" },
       "browsing-history-mirror": { v: "94,702", c: "registros, 0 perdidos" },
       "datavault-android": { v: "AES-256", c: "bóveda cifrada" },
@@ -606,7 +606,7 @@ const en: Dict = {
     title: "More projects",
     media: [
       { src: "/shots/stockpilot.webp", w: 1200, h: 750, alt: "stockpilot dashboard with inventory and alerts." },
-      { src: "/shots/mascota-form.webp", w: 1200, h: 771, alt: "Appointment booking form in mi-mascota-citas." },
+      { src: "/shots/mascota-inicio.webp", w: 1200, h: 750, alt: "mi-mascota-citas home: a golden puppy giving its paw and a kitten peeking over the headline." },
       { src: "/shots/datavault-dashboard.webp", w: 520, h: 1036, alt: "datavault-android home screen.", phone: true },
       { src: "/shots/datavault-ai.webp", w: 520, h: 1036, alt: "datavault-android AI assistant.", phone: true },
       { src: "/shots/springcloud-order.webp", w: 1200, h: 750, alt: "Screenshot of the spring-cloud-microservices ops console: architecture with the gateway, services and a created order." },
@@ -620,7 +620,7 @@ const en: Dict = {
     items: [
       { repo: "stockpilot", desc: "Inventory app on ASP.NET Core 9 and React/TS, 16 xUnit tests." },
       { repo: "spring-cloud-microservices", desc: "Gateway, Eureka, Config Server and 3 services, with an ops console and 49 tests." },
-      { repo: "mi-mascota-citas", desc: "Vet appointment booking on ASP.NET Core MVC with AJAX availability, 48 tests." },
+      { repo: "mi-mascota-citas", desc: "Vet appointment booking on ASP.NET Core MVC: animated landing, live AJAX agenda and 62 tests." },
       { repo: "datavault-android", desc: "AES-256 vault in Kotlin and Jetpack Compose, with an AI assistant." },
       { repo: "inventrack", desc: "Astro and PostgreSQL with a hardware-store look: 52 products with photos, animated carousel and email alerts." },
       { repo: "qaflow-testing-portfolio", desc: "QA testing: Postman 30/30, Cypress 4/4 and SQL 10/10." },
@@ -722,7 +722,7 @@ const en: Dict = {
       "spring-cloud-microservices": { v: "49", c: "tests" },
       "bi-tienda": { v: "9,393", c: "rows into a star schema" },
       stockpilot: { v: "16", c: "xUnit tests" },
-      "mi-mascota-citas": { v: "48", c: "tests" },
+      "mi-mascota-citas": { v: "62", c: "tests" },
       "zyra-compiler": { v: "x86-64", c: "native NASM output" },
       "browsing-history-mirror": { v: "94,702", c: "records, 0 lost" },
       "datavault-android": { v: "AES-256", c: "encrypted vault" },
